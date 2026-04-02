@@ -151,7 +151,10 @@ export default async function vnvRoutes(fastify, options) {
 
       try {
 
-        const cursor = await collection.byExample({ vi_id });
+        const cursor = await fastify.db.query(
+          `FOR doc IN vnv FILTER doc.vi_id == @vi_id LIMIT 1 RETURN doc`,
+          { vi_id }
+        );
         const verificationItem = await cursor.next();
 
         if (!verificationItem) {
@@ -178,7 +181,10 @@ export default async function vnvRoutes(fastify, options) {
       const updateData = request.body;
       try {
         // 1. Find document by vi_id
-        const cursor = await collection.byExample({ vi_id })
+        const cursor = await fastify.db.query(
+          `FOR doc IN vnv FILTER doc.vi_id == @vi_id LIMIT 1 RETURN doc`,
+          { vi_id }
+        );
         const existingDoc = await cursor.next();
 
         if (!existingDoc) {
@@ -207,7 +213,10 @@ export default async function vnvRoutes(fastify, options) {
       const { vi_id } = request.params;
       try {
         // 1. Find document by vi_id
-        const cursor = await collection.byExample({ vi_id })
+        const cursor = await fastify.db.query(
+          `FOR doc IN vnv FILTER doc.vi_id == @vi_id LIMIT 1 RETURN doc`,
+          { vi_id }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({

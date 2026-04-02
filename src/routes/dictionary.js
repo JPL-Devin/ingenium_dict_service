@@ -151,7 +151,10 @@ export default async function dictionaryRoutes(fastify, options) {
 
       try {
 
-        const cursor = await collection.byExample({ dictionary_type, dictionary_version });
+        const cursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
         const dictionary = await cursor.next();
 
         if (!dictionary) {
@@ -179,7 +182,10 @@ export default async function dictionaryRoutes(fastify, options) {
 
       try {
 
-        const cursor = await collection.byExample({ dictionary_type, dictionary_version })
+        const cursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
         const existingDoc = await cursor.next()
 
         if (!existingDoc) {
@@ -213,7 +219,10 @@ export default async function dictionaryRoutes(fastify, options) {
 
       try {
 
-        const cursor = await collection.byExample({ dictionary_type, dictionary_version })
+        const cursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
