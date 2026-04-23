@@ -131,7 +131,10 @@ export default async function customScriptRoutes(fastify, options) {
     handler: async (request, reply) => {
       const { script_id } = request.params;
       try {
-        const cursor = await collection.byExample({ script_id })
+        const cursor = await fastify.db.query(
+          `FOR doc IN custom_script FILTER doc.script_id == @script_id LIMIT 1 RETURN doc`,
+          { script_id }
+        );
         const customScriptItem = await cursor.next()
 
         if (!customScriptItem) {
@@ -157,7 +160,10 @@ export default async function customScriptRoutes(fastify, options) {
     handler: async (request, reply) => {
       const { script_id } = request.params;
       try {
-        const cursor = await collection.byExample({ script_id })
+        const cursor = await fastify.db.query(
+          `FOR doc IN custom_script FILTER doc.script_id == @script_id LIMIT 1 RETURN doc`,
+          { script_id }
+        );
         const existingDoc = await cursor.next()
 
         if (!existingDoc) {
@@ -187,7 +193,10 @@ export default async function customScriptRoutes(fastify, options) {
       const { script_id } = request.params;
       try {
         // 1. Find document by vi_id
-        const cursor = await collection.byExample({ script_id })
+        const cursor = await fastify.db.query(
+          `FOR doc IN custom_script FILTER doc.script_id == @script_id LIMIT 1 RETURN doc`,
+          { script_id }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({

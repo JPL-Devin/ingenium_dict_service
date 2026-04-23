@@ -44,8 +44,11 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // Step 1: Check if the dictionary exists
-        const cursor = await dictionaryCollection.byExample({ dictionary_type, dictionary_version });
-        const existingDict = await cursor.next();
+        const dictCursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
+        const existingDict = await dictCursor.next();
 
         if (!existingDict) {
           return reply.code(404).send({
@@ -208,7 +211,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await commandCollection.byExample({ dictionary_type, dictionary_version, command_stem: cmd_stem })
+        const cursor = await fastify.db.query(
+          `FOR doc IN command FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.command_stem == @cmd_stem LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, cmd_stem }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -236,7 +242,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await commandCollection.byExample({ dictionary_type, dictionary_version, command_stem: cmd_stem })
+        const cursor = await fastify.db.query(
+          `FOR doc IN command FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.command_stem == @cmd_stem LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, cmd_stem }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -264,7 +273,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await commandCollection.byExample({ dictionary_type, dictionary_version, command_stem: cmd_stem })
+        const cursor = await fastify.db.query(
+          `FOR doc IN command FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.command_stem == @cmd_stem LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, cmd_stem }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -295,8 +307,11 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // Step 1: Check if dictionary exists
-        const cursor = await dictionaryCollection.byExample({ dictionary_type, dictionary_version });
-        const existingDict = await cursor.next();
+        const dictCursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
+        const existingDict = await dictCursor.next();
 
         if (!existingDict) {
           return reply.code(404).send({
@@ -463,7 +478,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await evrCollection.byExample({ dictionary_type, dictionary_version, evr_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN evr FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.evr_name == @evr_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, evr_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -491,7 +509,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await evrCollection.byExample({ dictionary_type, dictionary_version, evr_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN evr FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.evr_name == @evr_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, evr_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -520,7 +541,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await evrCollection.byExample({ dictionary_type, dictionary_version, evr_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN evr FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.evr_name == @evr_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, evr_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -551,8 +575,11 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // Step 1: Check if dictionary exists
-        const cursor = await dictionaryCollection.byExample({ dictionary_type, dictionary_version });
-        const existingDict = await cursor.next();
+        const dictCursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
+        const existingDict = await dictCursor.next();
 
         if (!existingDict) {
           return reply.code(404).send({
@@ -719,7 +746,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await channelCollection.byExample({ dictionary_type, dictionary_version, channel_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN channel FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.channel_name == @channel_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, channel_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -746,7 +776,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await channelCollection.byExample({ dictionary_type, dictionary_version, channel_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN channel FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.channel_name == @channel_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, channel_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -775,7 +808,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await channelCollection.byExample({ dictionary_type, dictionary_version, channel_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN channel FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.channel_name == @channel_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, channel_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -806,8 +842,11 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // Step 1: Check if dictionary exists
-        const cursor = await dictionaryCollection.byExample({ dictionary_type, dictionary_version });
-        const existingDict = await cursor.next();
+        const dictCursor = await fastify.db.query(
+          `FOR doc IN dictionary FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version }
+        );
+        const existingDict = await dictCursor.next();
 
         if (!existingDict) {
           return reply.code(404).send({
@@ -976,7 +1015,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await mil1553Collection.byExample({ dictionary_type, dictionary_version, mil1553_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN mil1553 FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.mil1553_name == @mil1553_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, mil1553_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -1003,7 +1045,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await mil1553Collection.byExample({ dictionary_type, dictionary_version, mil1553_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN mil1553 FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.mil1553_name == @mil1553_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, mil1553_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
@@ -1031,7 +1076,10 @@ export default async function dictionaryContentRoutes(fastify, options) {
 
       try {
         // 1. Find document 
-        const cursor = await mil1553Collection.byExample({ dictionary_type, dictionary_version, mil1553_name })
+        const cursor = await fastify.db.query(
+          `FOR doc IN mil1553 FILTER doc.dictionary_type == @dictionary_type AND doc.dictionary_version == @dictionary_version AND doc.mil1553_name == @mil1553_name LIMIT 1 RETURN doc`,
+          { dictionary_type, dictionary_version, mil1553_name }
+        );
         const existingDoc = await cursor.next();
         if (!existingDoc) {
           return reply.code(404).send({
